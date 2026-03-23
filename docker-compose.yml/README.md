@@ -33,3 +33,10 @@ grafana:
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+
+  💡 설정의 의미와 사용 이유
+분리된 서비스 구조: 각 요소를 독립된 컨테이너로 실행하여 환경 충돌을 방지하고 확장성을 높였습니다.
+
+depends_on: 서비스 간의 의존성(예: DB가 뜬 후 Grafana 실행)을 정의하여 오류를 방지했습니다.
+
+Port Forwarding: 로컬 환경에서 컨테이너 내부 서비스(5432, 9092, 3000 등)에 직접 접근할 수 있도록 설정했습니다.
