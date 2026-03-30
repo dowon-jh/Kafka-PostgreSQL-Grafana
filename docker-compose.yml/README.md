@@ -48,3 +48,12 @@ docker-compose up -d
 docker-compose down
 ```
 
+### 3. 접속정보
+Grafana: http://localhost:3000
+
+PostgreSQL: localhost:5432
+
+Kafka: localhost:9092
+
+
+
