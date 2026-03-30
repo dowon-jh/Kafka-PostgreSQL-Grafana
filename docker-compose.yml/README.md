@@ -30,18 +30,18 @@
 
 
 ```env
-#kafka:
-    image: apache/kafka:latest             아파치 공식 최신 이미지를 사용
-    container_name: kafka-server           컨테이너의 고유 이름 설정
+kafka:
+    image: apache/kafka:latest                                        -> 아파치 공식 최신 이미지를 사용
+    container_name: kafka-server                                      -> 컨테이너의 고유 이름 설정
     ports:
-      - "9092:9092"                        외부(내 컴퓨터)와 내부 통신 포트 연결
+      - "9092:9092"                                                   -> 외부(내 컴퓨터)와 내부 통신 포트 연결
     environment:
-      - KAFKA_NODE_ID=1                    이 서버의 고유 ID (1번)
-      - KAFKA_PROCESS_ROLES=broker,controller 혼자서 데이터 전송(broker)과 관리(controller) 수행
-      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 내부 통신 주소 설정
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 외부(Python 등)에서 접속할 주소
-      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
+      - KAFKA_NODE_ID=1                                               -> 이 서버의 고유 ID (1번)
+      - KAFKA_PROCESS_ROLES=broker,controller                         -> 혼자서 데이터 전송(broker)과 관리(controller) 수행
+      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093          -> 내부 통신 주소 설정
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092         -> 외부(Python 등)에서 접속할 주소
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER                    -> 관리자용 리스너 이름 지정
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093               -> 관리자 투표 시스템 설정
 
 # PostgreSQL
       - POSTGRES_USER=dowon
