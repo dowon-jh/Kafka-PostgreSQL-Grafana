@@ -30,7 +30,7 @@
 
 
 ```env
-kafka:
+#kafka:
     image: apache/kafka:latest                                        -> 아파치 공식 최신 이미지를 사용
     container_name: kafka-server                                      -> 컨테이너의 고유 이름 설정
     ports:
