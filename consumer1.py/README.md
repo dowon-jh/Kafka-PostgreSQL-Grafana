@@ -1,3 +1,5 @@
+# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(4)
+
 ## 🚫 Anti-Spam Consumer (`consumer1.py`)
 
 이 컨슈머는 동일한 IP에서 발생하는 단기 반복 요청(스팸성 로그)을 필터링하여 데이터베이스의 품질을 유지하는 **보안관** 역할을 합니다.
