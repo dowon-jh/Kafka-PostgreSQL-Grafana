@@ -1,4 +1,4 @@
-# 🐳 Kafka-PostgreSQL-Grafana Infrastructure
+# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(1)
 
 이 프로젝트는 실시간 데이터 파이프라인을 구축하기 위한 핵심 인프라를 Docker Compose로 정의한 설정 파일입니다.
 
