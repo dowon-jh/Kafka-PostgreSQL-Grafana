@@ -1,3 +1,5 @@
+# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(5)
+
 ## 🛡️ Security Filter Consumer (consumer2.py)
 #### : 이 컨슈머는 전체 로그 스트림 중에서 관리자 페이지(/admin)나 로그인 페이지(/login)와 같이 보안상 민감한 경로에 대한 접근을 실시간으로 필터링하는 데이터 보안 처리기입니다.
 
