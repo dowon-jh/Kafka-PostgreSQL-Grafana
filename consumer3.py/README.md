@@ -1,4 +1,4 @@
-# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(5)
+# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(6)
 
 
 ## 🎭 Privacy Masking Consumer (consumer3.py)
