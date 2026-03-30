@@ -39,7 +39,7 @@ while True:
 python consumer0.py
 ```
 -------------------------
-## 🚫 Anti-Spam Consumer (`consumer1.py`)
+# 🚫 Anti-Spam Consumer (`consumer1.py`)
 "동일한 사용자가 짧은 시간 내에 반복적으로 보내는 데이터를 필터링"
 
 #### 🛠️ 핵심 기능: IP 기반 5초 쿨타임 시스템 (Anti-Spam).
