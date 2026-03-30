@@ -38,3 +38,11 @@ POSTGRES_DB=logdb
 # Grafana
 GRAFANA_USER=dowon
 GRAFANA_PASSWORD=your_password
+```
+### 2. 컨테이너 실행
+# 서비스 실행
+docker-compose up -d
+
+# 서비스 중단
+docker-compose down
+
