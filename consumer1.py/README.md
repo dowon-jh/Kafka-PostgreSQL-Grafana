@@ -50,6 +50,8 @@ if __name__ == "__main__":
     run_consumer()
 
 ```
+<img width="909" height="452" alt="컨수머1" src="https://github.com/user-attachments/assets/3e081308-3972-43f5-87df-66c404741cc7" />
+
 ### 📈 작동 프로세스
 - **메시지 수신**: Kafka로부터 실시간 로그 데이터를 수신합니다.
 
