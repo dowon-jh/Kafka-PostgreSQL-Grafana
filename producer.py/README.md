@@ -72,3 +72,6 @@ if __name__ == "__main__":
 ### 🚀 실행 방법
 ```bash
 python producer.py
+```
+<img width="1484" height="426" alt="프로듀서" src="https://github.com/user-attachments/assets/c9cd2588-2c9a-4749-9ee9-ebe54b1e22db" />
+
