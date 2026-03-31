@@ -45,6 +45,7 @@ if __name__ == "__main__":
     run_consumer()
 
 ```
+<img width="747" height="331" alt="컨수머3" src="https://github.com/user-attachments/assets/b81e021c-ea38-4b33-9ad5-29c803e5d5f4" />
 
 ### ❓ 왜 이 코드를 사용했는가? (Motivation)
 - **법적 규제 준수**: GDPR(유럽 개인정보보호법)이나 국내 개인정보보호법에 따라 사용자의 IP 주소는 개인 식별 정보로 간주될 수 있으므로, 이를 비식별 처리하여 저장할 필요가 있습니다.
