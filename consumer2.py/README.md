@@ -42,6 +42,7 @@ if __name__ == "__main__":
     run_consumer()
 
 ```
+<img width="788" height="394" alt="컨수머2" src="https://github.com/user-attachments/assets/11299ec7-80eb-4698-a4b1-93ce59c47739" />
 
 ### ❓ 왜 이 코드를 사용했는가? (Motivation)
 - **보안 계층의 분리**: 방화벽이나 애플리케이션 레벨 외에도, 데이터 파이프라인 단계에서 비정상적인 접근 시도를 감지하는 추가적인 방어선을 구축하기 위함입니다.
