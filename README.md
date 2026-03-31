@@ -1,4 +1,47 @@
-# ✅ 파이프라인 검증 (Integrated Test)
+# 🚀 Real-time Log Pipeline: Kafka, Postgres & Grafana
+데이터 생성부터 시각화까지, 실시간 데이터 엔지니어링의 전 과정을 다루는 End-to-End 프로젝트입니다.
+
+본 프로젝트는 가상의 웹 로그를 실시간으로 생성하고, 메시지 브로커(Kafka)를 통해 유통하며, 목적에 맞는 4가지 컨슈머 로직을 거쳐 데이터베이스(PostgreSQL)에 적재한 뒤 대시보드(Grafana)로 모니터링하는 파이프라인을 구축합니다.
+
+### 🏗️ 시스템 아키텍처 (System Architecture)
+전체 데이터 흐름은 다음과 같은 구조로 설계되었습니다.
+
+**Producer**: 실시간 웹 로그(IP, 요청 경로, 상태 코드)를 생성하여 Kafka로 전송합니다.
+
+**Kafka (KRaft Mode)**: Zookeeper 없이 동작하는 최신 모드로 메시지를 효율적으로 중계합니다.
+
+**Multi-Consumers (0~3)**: 동일한 토픽을 구독하여 각기 다른 비즈니스 로직(저장, 필터링, 보안, 마스킹)을 처리합니다.
+
+**PostgreSQL**: 구조화된 로그 데이터를 영구 저장소에 적재합니다.
+
+**Grafana**: SQL 쿼리를 기반으로 에러율 및 접속 현황을 실시간 시각화합니다.
+
+### 🛠️ 기술 스택 (Tech Stack)
+**Infrastructure**: Docker, Docker Compose
+
+**Message Broker**: Apache Kafka (Latest KRaft Mode)
+
+**Database**: PostgreSQL 15
+
+**Visualization**: Grafana OSS
+
+**Language**: Python 3.x (kafka-python, psycopg2-binary)
+
+### 📂 프로젝트 구성 (Project Structure)
+**producer.py**: 실시간 로그 생성기
+
+**consumer0.py**: 기본 데이터 적재 (All Ingest)
+
+**consumer1.py**: 스팸 방지 필터 (5s Cooldown)
+
+**consumer2.py**: 보안 필터 (Admin/Login 접근 차단)
+
+**consumer3.py**: 개인정보 보호 (IP Masking)
+
+**docker-compose.yml**: 인프라 정의 파일
+
+-----------------------------------------
+## ✅ 파이프라인 검증 (Integrated Test)
 
 4개의 컨슈머를 동시에 가동하여 동일한 로그 스트림이 각 비즈니스 로직에 따라 처리되는지 확인
 
@@ -10,7 +53,8 @@
 - **데이터 변환**: 원본 IP와 비식별화된 IP가 실시간으로 변환되어 DB 테이블(`web_logs`)에 기록됨
 - **시간 일관성**: 밀리초(ms) 단위의 타임스탬프(`ts`)를 통해 데이터 흐름의 순서와 지연 없음을 확인
 -------------------------
-# 📤 Log Producer (`producer.py`)
+-------------------------
+## 📤 Log Producer (`producer.py`)
 
 "이 모듈은 웹 서버에서 발생하는 실시간 로그 데이터를 시뮬레이션하여 Kafka 브로커로 전송하는 역할"
 
@@ -34,7 +78,7 @@ while True:
     time.sleep(1)
 ```
 ----------
-# 📥 Basic Consumer (`consumer0.py`)
+## 📥 Basic Consumer (`consumer0.py`)
 "Kafka의 `web_logs` 토픽을 구독하여 실시간 데이터를 수신하고, 이를 PostgreSQL 데이터베이스에 저장하는 가장 기본적인 `데이터 수집기`"
 
 #### 🛠️ 핵심 기능
@@ -62,7 +106,7 @@ python consumer0.py
 #### ‼️ 특이사항: `consumer0.py`와 같은 토픽을 구독하지만, 조건에 맞는 데이터만 선택적으로 PostgreSQL에 적재합니다.
 
 --------------------------
-# 🛡️ Consumer 2: Security Filter (consumer2.py)
+## 🛡️ Consumer 2: Security Filter (consumer2.py)
 "보안 민감 경로에 대한 실시간 접근 차단 및 필터링"
 
 #### 📋 개요
@@ -84,7 +128,7 @@ if path in excluded_paths:
 - **실시간 경보**: 터미널 로그를 통해 비정상적인 접근 시도를 즉각 확인 가능합니다.
 
 ------------------------------
-# 🎭 Consumer 3: Privacy Masking (consumer3.py)
+## 🎭 Consumer 3: Privacy Masking (consumer3.py)
 "개인정보 보호를 위한 IP 주소 비식별화 처리"
 
 #### 📋 개요
