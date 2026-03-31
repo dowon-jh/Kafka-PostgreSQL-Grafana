@@ -48,6 +48,9 @@
 ### 🖥️ DB 적재 데이터 모니터링 (psql)
 <img width="981" height="420" alt="종합결과확인2" src="https://github.com/user-attachments/assets/7bcf49af-353b-4681-826a-cce39ea88b69" />
 
+### 🖥️ 데이터 입수 확인
+<img width="1524" height="592" alt="2026-03-31 19 01 29" src="https://github.com/user-attachments/assets/d57cacd3-5f08-4dc4-abaf-0a9fa1c8cf32" />
+
 
 - **병렬 처리**: 동일 토픽을 구독하는 `consumer0`(전체저장)과 `consumer3`(마스킹)의 데이터가 동시에 적재됨
 - **데이터 변환**: 원본 IP와 비식별화된 IP가 실시간으로 변환되어 DB 테이블(`web_logs`)에 기록됨
