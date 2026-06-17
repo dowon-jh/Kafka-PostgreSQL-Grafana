@@ -1,72 +1,61 @@
-# 🐳 Kafka-PostgreSQL-Grafana Infrastructure(1)
+# Docker Compose Infrastructure
 
-이 프로젝트는 실시간 데이터 파이프라인을 구축하기 위한 핵심 인프라를 Docker Compose로 정의한 설정 파일입니다.
+이 문서는 Kafka, PostgreSQL, Grafana 로컬 실습 환경을 구성하는 `docker-compose.yml`의 역할을 정리한 문서입니다.
 
-## 🏗️ 시스템 구조
-- **Kafka**: 실시간 메시지 스트림 처리 (KRaft 모드)
-- **PostgreSQL**: 정형 로그 데이터 저장소
-- **Grafana**: 실시간 데이터 시각화 대시보드
+## 구성 서비스
 
+| 서비스 | 역할 | 기본 포트 |
+| --- | --- | --- |
+| Kafka | 실시간 로그 메시지를 중계하는 broker | 9092 |
+| PostgreSQL | 구조화된 로그 데이터를 저장하는 DB | 5432 |
+| Grafana | PostgreSQL 데이터를 시각화하는 대시보드 | 3000 |
 
+## 핵심 설계
 
-## 📄 docker-compose.yml 상세 설명
+- Kafka는 Zookeeper 없이 KRaft Mode로 구성합니다.
+- PostgreSQL은 `web_logs` 테이블을 통해 로그 데이터를 저장합니다.
+- Grafana는 PostgreSQL datasource를 연결해 SQL 기반 패널을 구성합니다.
+- 계정, 비밀번호, DB명은 `.env`에서 읽도록 관리합니다.
 
-| 서비스 | 이미지 | 역할 | 포트 |
-| :--- | :--- | :--- | :--- |
-| **Kafka** | `apache/kafka` | 실시간 메시지 브로커 | 9092 |
-| **PostgreSQL** | `postgres:15` | 로그 데이터 보관 DB | 5432 |
-| **Grafana** | `grafana-oss` | 시각화 도구 | 3000 |
-
-### 💡 핵심 설정 포인트
-1. **KRaft Mode**: 별도의 Zookeeper 컨테이너 없이 Kafka 단독으로 실행 가능하도록 설정하여 리소스를 절약했습니다.
-2. **Depends On**: 서비스 간의 의존성을 정의하여 DB가 완전히 가동된 후 시각화 툴이 연동되도록 안정성을 높였습니다.
-3. **Environment Variables**: 각 컨테이너의 핵심 설정(계정 정보, 네트워크 리스너 등)을 환경 변수로 관리하여 유연성을 확보했습니다.
-
----
-
-## 🚀 시작하기
-
-### 1. 환경 변수 설정
-
+## `.env` 예시
 
 ```env
-#kafka:
-    image: apache/kafka:latest                                        -> 아파치 공식 최신 이미지를 사용
-    container_name: kafka-server                                      -> 컨테이너의 고유 이름 설정
-    ports:
-      - "9092:9092"                                                   -> 외부(내 컴퓨터)와 내부 통신 포트 연결
-    environment:
-      - KAFKA_NODE_ID=1                                               -> 이 서버의 고유 ID (1번)
-      - KAFKA_PROCESS_ROLES=broker,controller                         -> 혼자서 데이터 전송(broker)과 관리(controller) 수행
-      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093          -> 내부 통신 주소 설정
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092         -> 외부(Python 등)에서 접속할 주소
-      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER                    -> 관리자용 리스너 이름 지정
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093               -> 관리자 투표 시스템 설정
-
-# PostgreSQL
-      - POSTGRES_USER=dowon
-      - POSTGRES_PASSWORD=your_password
-      - POSTGRES_DB=logdb
-
-# Grafana
-      - GRAFANA_USER=dowon
-      - GRAFANA_PASSWORD=your_password
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_DB=logdb
+POSTGRES_USER=dowon
+POSTGRES_PASSWORD=change_me
+KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+KAFKA_TOPIC=web_logs
 ```
-### 2. 컨테이너 실행
-``` 
-서비스 실행
-docker-compose up -d
 
-서비스 중단
+## 실행 명령
+
+```bash
+docker-compose up -d
+```
+
+중단:
+
+```bash
 docker-compose down
 ```
 
-### 3. 접속정보
-Grafana: http://localhost:3000
+## PostgreSQL 테이블 예시
 
-PostgreSQL: localhost:5432
+```sql
+CREATE TABLE web_logs (
+    id BIGSERIAL PRIMARY KEY,
+    ip VARCHAR(50) NOT NULL,
+    path VARCHAR(200) NOT NULL,
+    status INTEGER NOT NULL,
+    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-Kafka: localhost:9092
+## 점검 포인트
 
-
-
+- Kafka가 `localhost:9092`로 접근 가능한지 확인합니다.
+- PostgreSQL 접속 정보가 `.env`와 일치하는지 확인합니다.
+- Grafana datasource에서 PostgreSQL 연결 테스트가 성공하는지 확인합니다.
+- DB 비밀번호는 README나 코드에 직접 기록하지 않습니다.
